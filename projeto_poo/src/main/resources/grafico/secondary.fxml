@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grafico.SecondaryController">
     <children>
-        <BarChart fx:id="barChart" layoutX="14.0" layoutY="14.0" prefHeight="372.0" prefWidth="582.0">
+        <!-- Substituí o BarChart por um LineChart para funcionar corretamente com XYChart -->
+        <LineChart fx:id="candlestickChart" layoutX="14.0" layoutY="14.0" prefHeight="372.0" prefWidth="582.0">
             <xAxis>
-                <CategoryAxis fx:id="xAxis" />
+                <NumberAxis fx:id="xAxis" label="Tempo" />
             </xAxis>
             <yAxis>
-                <NumberAxis fx:id="yAxis" />
+                <NumberAxis fx:id="yAxis" label="Preço" />
             </yAxis>
-        </BarChart>
+        </LineChart>
     </children>
 </AnchorPane>
