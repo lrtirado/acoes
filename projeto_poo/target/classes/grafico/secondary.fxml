@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
 
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grafico.SecondaryController">
-    <children>
-        <!-- Substituí o BarChart por um LineChart para funcionar corretamente com XYChart -->
-        <LineChart fx:id="candlestickChart" layoutX="14.0" layoutY="14.0" prefHeight="372.0" prefWidth="582.0">
-            <xAxis>
-                <NumberAxis fx:id="xAxis" label="Tempo" />
-            </xAxis>
-            <yAxis>
-                <NumberAxis fx:id="yAxis" label="Preço" />
-            </yAxis>
-        </LineChart>
-    </children>
-</AnchorPane>
+<BorderPane xmlns="http://javafx.com/javafx/21" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="grafico.SecondaryController"
+            style="-fx-padding: 20;">
+    
+    <top>
+        <Label text="Gráfico Candlestick - Histórico de Cotações" 
+               style="-fx-font-size: 18; -fx-font-weight: bold;" 
+               BorderPane.alignment="CENTER"/>
+    </top>
+    
+    <center>
+        <Pane fx:id="chartPane" 
+              prefWidth="1000" 
+              prefHeight="600" 
+              style="-fx-background-color: #f4f4f4;"/>
+    </center>
+    
+    <bottom>
+        <Button text="Voltar" 
+                onAction="#voltarParaPrincipal" 
+                style="-fx-font-size: 14; -fx-pref-width: 100;"
+                BorderPane.alignment="CENTER"/>
+    </bottom>
+</BorderPane>

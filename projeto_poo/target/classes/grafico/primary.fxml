@@ -1,12 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="grafico.PrimaryController" spacing="10" alignment="CENTER">
-    <children>
-        <Label fx:id="statusLabel" text="Selecione um arquivo CSV para continuar"/>
-        <Button fx:id="uploadButton" text="Carregar Arquivo" onAction="#uploadAction"/>
-        <Button text="Próximo" onAction="#nextAction"/>
-    </children>
-</VBox>
+<BorderPane xmlns="http://javafx.com/javafx/21" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="grafico.PrimaryController"
+            style="-fx-padding: 20;">
+    
+    <center>
+        <VBox spacing="20" alignment="CENTER">
+            <Button text="Carregar CSV" 
+                    onAction="#handleCarregarCSV" 
+                    style="-fx-font-size: 14; -fx-pref-width: 150;"/>
+            
+            <TableView fx:id="tabelaDados" prefHeight="400" prefWidth="800">
+                <columns>
+                    <!-- Coluna Data -->
+                    <TableColumn text="Data" prefWidth="120">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="data" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    
+                    <!-- Coluna Abertura -->
+                    <TableColumn text="Abertura (R$)" prefWidth="100">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="abertura" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    
+                    <!-- Coluna Fechamento -->
+                    <TableColumn text="Fechamento (R$)" prefWidth="100">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="fechamento" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    
+                    <!-- Coluna Mínimo -->
+                    <TableColumn text="Mínimo (R$)" prefWidth="100">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="minimo" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    
+                    <!-- Coluna Máximo -->
+                    <TableColumn text="Máximo (R$)" prefWidth="100">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="maximo" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    
+                    <!-- Coluna Volume -->
+                    <TableColumn text="Volume" prefWidth="120">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="volume" />
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+            
+            <HBox spacing="20" alignment="CENTER">
+                <Button text="Visualizar Gráfico" 
+                        onAction="#abrirGrafico" 
+                        style="-fx-font-size: 14; -fx-pref-width: 180;"/>
+                <Button text="Configurações" 
+                        onAction="#abrirConfiguracoes" 
+                        style="-fx-font-size: 14; -fx-pref-width: 180;"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

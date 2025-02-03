@@ -1,49 +1,24 @@
 package grafico;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
 
-public class CandlestickNode extends Pane {
-
-    //definicao do grafico
-    public CandlestickNode (double min, double max, double open, double close, double globalMin, double globalMax) {
+public class CandleStickNode extends Pane {
+    private static final double WIDTH = 8;
+    
+    public CandleStickNode(double open, double close, double high, double low, double yScale) {
+        double altura = Math.abs(open - close) * yScale;
+        double y = Math.min(open, close) * yScale;
         
-        //tamanho do grafico e verificacao de erro
-        double chartHeight = 400;
-        if (globalMin >= globalMax) {
-            throw new IllegalArgumentException("Minimo global deve ser menor que o maximo global");
-        }
-
-        double scale = chartHeight / (globalMax - globalMin); //escala do grafico
-
-        //Convertando os valores para coordenadas do grafico
-        double minY = chartHeight - (min - globalMin) * scale;
-        double maxY = chartHeight - (max - globalMin) * scale;
-        double openY = chartHeight - (open - globalMin) * scale;
-        double closeY = chartHeight - (close - globalMin) * scale;
+        Rectangle corpo = new Rectangle(WIDTH, altura);
+        corpo.setFill(close > open ? Color.GREEN : Color.RED);
+        corpo.setY(y);
         
-        //verificacao de erro
-        minY = Math.max(0, minY);
-        maxY = Math.min(chartHeight, maxY);
-        openY = Math.max(0, openY);
-        closeY = Math.min(chartHeight, closeY);
-
-
-        //linha vertical (max e min)
-        Line line = new Line(0, minY, 0, maxY);
-        line.setStroke(Color.BLACK);
-
-        //corpo do grafico candlestick
-        double bodyHeight = Math.abs(openY - closeY);
-        Rectangle body = new Rectangle (-5, Math.min(openY, closeY), 10, bodyHeight);
-
-        //adicionar metodo para mudanca de cor de acordo com preferencias do usuario
-        body.setFill(open > close ? Color.RED : Color.GREEN);
-        body.setStroke(Color.BLACK);
-
-        getChildren().addAll(line, body);
+        Line linhaSuperior = new Line(WIDTH/2, high * yScale, WIDTH/2, y + altura);
+        Line linhaInferior = new Line(WIDTH/2, y, WIDTH/2, low * yScale);
+        
+        getChildren().addAll(linhaSuperior, linhaInferior, corpo);
     }
-
 }

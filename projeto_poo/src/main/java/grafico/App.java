@@ -1,9 +1,5 @@
 package grafico;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,40 +7,71 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
-
-    private static Scene scene;
-    private static final Map<String, Object> controllers = new HashMap<>();
+    private static PrimaryController primaryController;
+    private static SecondaryController secondaryController;
+    private static TertiaryController tertiaryController;
+    
+    private static Parent primaryRoot;
+    private static Parent secondaryRoot;
+    private static Parent tertiaryRoot;
+    private static Stage mainStage;
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        // Carrega o FXML inicial
-        scene = new Scene(loadFXML("primary"), 800, 600);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Visualizador de Gráficos Candlestick");
+    public void start(Stage primaryStage) throws Exception {
+        mainStage = primaryStage;
+        
+        // Carrega a interface principal
+        FXMLLoader primaryLoader = new FXMLLoader(getClass().getResource("primary.fxml"));
+        primaryRoot = primaryLoader.load();
+        primaryController = primaryLoader.getController();
+        
+        // Carrega a interface secundária
+        FXMLLoader secondaryLoader = new FXMLLoader(getClass().getResource("secondary.fxml"));
+        secondaryRoot = secondaryLoader.load();
+        secondaryController = secondaryLoader.getController();
+        
+        // Carrega a interface de configuração
+        FXMLLoader tertiaryLoader = new FXMLLoader(getClass().getResource("tertiary.fxml"));
+        tertiaryRoot = tertiaryLoader.load();
+        tertiaryController = tertiaryLoader.getController();
+        
+        // Configura a cena inicial
+        primaryStage.setScene(new Scene(primaryRoot, 1000, 700));
+        primaryStage.setTitle("Painel de Ações - Watchlist");
         primaryStage.show();
     }
 
-    public static void setRoot(String fxml) throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource(fxml));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.setScene(scene);  // Muda para a nova cena
-    }
-    
-
-    public static Object getController(String fxml) {
-        // Retorna o controlador associado ao FXML
-        return controllers.get(fxml);
+    // Métodos para navegação entre telas
+    public static void mudarParaCenaPrincipal() {
+        mainStage.setScene(new Scene(primaryRoot, 1000, 700));
+        mainStage.setTitle("Painel de Ações - Watchlist");
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        // Método para carregar o arquivo FXML
-        FXMLLoader loader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return loader.load();
+    public static void mudarParaCenaSecundaria() {
+        mainStage.setScene(new Scene(secondaryRoot, 1200, 800));
+        mainStage.setTitle("Gráfico Candlestick");
+    }
+
+    public static void mudarParaCenaTerciaria() {
+        mainStage.setScene(new Scene(tertiaryRoot, 600, 400));
+        mainStage.setTitle("Configurações");
+    }
+
+    // Getters para os controllers
+    public static SecondaryController getSecondaryController() {
+        return secondaryController;
+    }
+
+    public static TertiaryController getTertiaryController() {
+        return tertiaryController;
+    }
+
+    public static PrimaryController getPrimaryController() {
+        return primaryController;
     }
 
     public static void main(String[] args) {
-        launch(args); // Inicia o aplicativo JavaFX
+        System.setProperty("glass.accessible.force", "false");
+        launch(args);
     }
 }
